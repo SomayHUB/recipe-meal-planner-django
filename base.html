@@ -1,0 +1,30 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}MealMate{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'planner/style.css' %}">
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap nav">
+    <a class="brand" href="{% url 'planner:dashboard' %}">MealMate</a>
+    <nav>
+      <a href="{% url 'planner:recipe_list' %}">Recipes</a>
+      <a href="{% url 'planner:meal_plan' %}">Meal Planner</a>
+      <a href="{% url 'planner:shopping_list' %}">Shopping List</a>
+      <a class="nav-button" href="{% url 'planner:recipe_create' %}">+ Add Recipe</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+  {% if messages %}
+    {% for message in messages %}<div class="message">{{ message }}</div>{% endfor %}
+  {% endif %}
+  {% block content %}{% endblock %}
+</main>
+<footer><div class="wrap">Recipe Meal Planner · Django + SQLite · Student Project</div></footer>
+</body>
+</html>

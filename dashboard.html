@@ -1,0 +1,17 @@
+{% extends 'planner/base.html' %}
+{% block title %}Dashboard · MealMate{% endblock %}
+{% block content %}
+<section class="hero">
+  <div><p class="eyebrow">RECIPE MEAL PLANNER</p><h1>Plan your week. Eat with purpose.</h1><p>Save recipes, schedule meals and generate a simple shopping list from the meals you planned.</p><a class="button" href="{% url 'planner:meal_plan' %}">Plan This Week</a></div>
+  <div class="hero-card"><span>🍲</span><strong>{{ planned_count }}</strong><small>meals planned this week</small></div>
+</section>
+<section class="stats">
+  <div><strong>{{ recipe_count }}</strong><span>Recipes</span></div><div><strong>{{ favorite_count }}</strong><span>Favorites</span></div><div><strong>{{ planned_count }}</strong><span>Upcoming Meals</span></div>
+</section>
+<section class="section-head"><h2>Upcoming meals</h2><a href="{% url 'planner:meal_plan' %}">View planner →</a></section>
+<div class="cards">
+{% for plan in upcoming %}<article class="card"><div class="pill">{{ plan.meal_type }}</div><h3>{{ plan.recipe.name }}</h3><p>{{ plan.date|date:'D, d M' }} · {{ plan.recipe.prep_minutes }} min</p></article>{% empty %}<div class="empty">No meals planned yet. Add one from the Meal Planner.</div>{% endfor %}
+</div>
+<section class="section-head"><h2>Recipes</h2><a href="{% url 'planner:recipe_list' %}">Browse all →</a></section>
+<div class="cards">{% for recipe in recent_recipes %}<article class="card"><div class="pill">{{ recipe.category }}</div><h3>{{ recipe.name }}</h3><p>{{ recipe.prep_minutes }} min · {{ recipe.servings }} servings · {{ recipe.calories }} kcal</p><a href="{% url 'planner:recipe_detail' recipe.pk %}">Open recipe →</a></article>{% endfor %}</div>
+{% endblock %}

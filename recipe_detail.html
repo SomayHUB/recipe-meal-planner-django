@@ -1,0 +1,7 @@
+{% extends 'planner/base.html' %}
+{% block title %}{{ recipe.name }} · MealMate{% endblock %}
+{% block content %}
+<div class="page-title"><div><span class="pill">{{ recipe.category }}</span><h1>{{ recipe.name }}</h1><p class="muted">{{ recipe.prep_minutes }} min · {{ recipe.servings }} servings · {{ recipe.calories }} kcal</p></div><div class="actions"><a class="button secondary" href="{% url 'planner:recipe_update' recipe.pk %}">Edit</a><a class="button danger" href="{% url 'planner:recipe_delete' recipe.pk %}">Delete</a></div></div>
+<div class="detail-grid"><section class="panel"><h2>Ingredients</h2><ul>{% for item in recipe.ingredient_list %}<li>{{ item }}</li>{% endfor %}</ul></section><section class="panel"><h2>Instructions</h2><p class="instructions">{{ recipe.instructions|linebreaksbr }}</p></section></div>
+<form method="post" action="{% url 'planner:toggle_favorite' recipe.pk %}" class="favorite-form">{% csrf_token %}<input type="hidden" name="next" value="{% url 'planner:recipe_detail' recipe.pk %}"><button class="button secondary" type="submit">{% if recipe.is_favorite %}★ Remove favorite{% else %}☆ Add to favorites{% endif %}</button></form>
+{% endblock %}
